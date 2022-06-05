@@ -17,7 +17,7 @@ class ComplimentService {
       try {
         const res = await axios.get("https://complimentr.com/api");
         const data: { compliment: string } = res.data;
-        message.reply({
+        await message.reply({
           content: `${name}, ${data.compliment}`,
         });
       } catch (err) {

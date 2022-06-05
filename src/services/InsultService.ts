@@ -16,12 +16,44 @@ class InsultService {
     if (enemy) {
       try {
         enemy = `***${String(enemy).toLowerCase()}***`;
-        const res = await axios.get(
-          `https://insult.mattbas.org/api/en/insult.json?who=${enemy}`
-        );
-        const data: Insult = res.data;
-        message.reply({
-          content: data.insult,
+        const axiosInstance = axios.create({
+          headers: {
+            "User-Agent": Math.random(),
+          },
+        });
+        let reply = "";
+        switch (Math.floor(Math.random() * 4)) {
+          case 0: {
+            const res = await axiosInstance.get(
+              `https://insult.mattbas.org/api/en/insult.json?who=${enemy}`
+            );
+            reply = res.data.insult;
+            break;
+          }
+          case 1: {
+            const res = await axiosInstance.get(
+              "https://evilinsult.com/generate_insult.php"
+            );
+            reply = `${enemy} ${Util.uncapitalizeFirstLetter(res.data)}`;
+            break;
+          }
+          case 2: {
+            const res = await axiosInstance.get(
+              "https://insults.tr00st.co.uk/your_mom/"
+            );
+            reply = `${enemy} ${Util.uncapitalizeFirstLetter(res.data)}`;
+            break;
+          }
+          case 3: {
+            const res = await axiosInstance.get(
+              `https://trumpinsultgenerator.com/api/InsultGenerator?subject=${enemy}`
+            );
+            reply = res.data.insult;
+            break;
+          }
+        }
+        await message.reply({
+          content: reply,
         });
       } catch (err) {
         console.log(err);

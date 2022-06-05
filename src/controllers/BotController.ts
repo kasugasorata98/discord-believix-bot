@@ -1,21 +1,36 @@
-import DiscordJS from "discord.js";
-import BaseController from "./BaseController";
+import DiscordJS, { TextChannel } from "discord.js";
+import ComplimentService from "../services/ComplimentService";
+import InsultService from "../services/InsultService";
 import CommandController from "./CommandController";
+import WarCallController from "./WarCallController";
+import DiscordClient from "../lib/DiscordClient";
 
-class BotController extends BaseController {
+class BotController extends DiscordClient {
+  insultService: any;
+  complimentService: any;
   constructor() {
     super();
+    this.insultService = new InsultService();
+    this.complimentService = new ComplimentService();
   }
 
   init() {
-    this.discordClient.on("ready", () => {
-      console.log(`Logged in as ${this.discordClient.user?.tag}!`);
+    this.getClient().on("ready", async (client) => {
+      console.log(`Logged in as ${client.user?.tag}!`);
+      this.initializeWarCall();
     });
-    this.discordClient.on("messageCreate", (message) => {
+    this.getClient().on("messageCreate", (message) => {
       this.handleOnMessageCreated(message);
     });
+    this.getClient().login(process.env.TOKEN);
+  }
 
-    this.discordClient.login(process.env.TOKEN);
+  initializeWarCall() {
+    const generalChannel: TextChannel | null = this.getChannelByName("general");
+    if (generalChannel) {
+      const warCallController = new WarCallController(generalChannel);
+      warCallController.handleProcess();
+    }
   }
 
   handleOnMessageCreated(message: DiscordJS.Message) {
