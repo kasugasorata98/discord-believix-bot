@@ -32,7 +32,14 @@ class InsultService {
           }
           case 1: {
             const res = await axiosInstance.get(
-              "https://evilinsult.com/generate_insult.php"
+              `https://evilinsult.com/generate_insult.php?lang=${
+                Math.random() * 2 === 0 ? "en" : "es"
+              }`
+            );
+            console.log(
+              `https://evilinsult.com/generate_insult.php?lang=${
+                Math.random() * 2 === 0 ? "en" : "es"
+              }`
             );
             reply = `${enemy} ${Util.uncapitalizeFirstLetter(res.data)}`;
             break;
