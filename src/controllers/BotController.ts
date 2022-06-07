@@ -33,10 +33,15 @@ class BotController extends DiscordClient {
     }
   }
 
-  handleOnMessageCreated(message: DiscordJS.Message) {
+  async handleOnMessageCreated(message: DiscordJS.Message) {
     if (message.author.bot === true) {
       return;
     }
+    if (message.content.includes("<@982060525267603494>"))
+      // tagging the bot response
+      return await message.reply({
+        content: "Wtf do you want from me 🤬?",
+      });
     if (message.content.startsWith("!")) {
       const args = message.content.slice(1).split(/ +/); //removes ! and split into array
       this.handleCommands(args, message);
