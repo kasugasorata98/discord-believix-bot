@@ -4,7 +4,7 @@ import DiscordJS from "discord.js";
 import { Name } from "../models/Name";
 
 class ComplimentService {
-  async compliment(message: DiscordJS.Message) {
+  async compliment(message: DiscordJS.Message): Promise<void> {
     const names = await Name.find({
       isEnemy: false,
     });

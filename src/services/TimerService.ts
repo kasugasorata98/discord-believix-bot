@@ -15,7 +15,7 @@ class TimerService {
     this.args = args;
     this.discordClient = new DiscordClient();
   }
-  async handleTimer() {
+  async handleTimer(): Promise<void> {
     switch (this.args[1]) {
       case "set":
         this.setTimer();
@@ -35,7 +35,7 @@ class TimerService {
         });
     }
   }
-  async getTimer() {
+  async getTimer(): Promise<Message> {
     if (timer) {
       const remaining = Util.millisToMinutesAndSeconds(
         Util.getRemainingTime(delay, startTimeMS)
@@ -50,7 +50,7 @@ class TimerService {
       content: `No timer has been set.`,
     });
   }
-  async setTimer() {
+  async setTimer(): Promise<Message | void> {
     /*
         args[1] = number (probably minutes or hours)
         args[2] = either min/mins/minute/minutes or hr/hrs/hour/hours
@@ -110,7 +110,7 @@ class TimerService {
     }
   }
 
-  clearTimer() {
+  clearTimer(): void {
     if (timer) {
       clearTimeout(timer);
       startTimeMS = 0;

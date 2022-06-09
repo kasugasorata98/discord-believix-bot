@@ -6,7 +6,7 @@ class WarCallService {
     this.generalChannel = generalChannel;
   }
 
-  startWarSuggestTimer(ms = 1000 * 60 * 60 * 4) {
+  startWarSuggestTimer(ms = 1000 * 60 * 60 * 4): void {
     setInterval(async () => {
       const sentMessage = await this.generalChannel.send({
         content:

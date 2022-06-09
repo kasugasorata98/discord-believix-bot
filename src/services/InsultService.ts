@@ -5,7 +5,7 @@ import { Name } from "../models/Name";
 import { Util } from "../utils/Util";
 
 class InsultService {
-  async insult(message: DiscordJS.Message) {
+  async insult(message: DiscordJS.Message): Promise<void> {
     const names = await Name.find({
       isEnemy: true,
     });

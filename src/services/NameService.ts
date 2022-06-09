@@ -1,5 +1,5 @@
 import { Name } from "../models/Name";
-import DiscordJS from "discord.js";
+import DiscordJS, { Message } from "discord.js";
 import { Constants } from "../constants";
 
 class NameService {
@@ -10,7 +10,7 @@ class NameService {
     this.args = args;
   }
 
-  async addName() {
+  async addName(): Promise<Message | void> {
     try {
       if (this.args.length !== 3) {
         return await this.message.reply({
@@ -53,7 +53,7 @@ class NameService {
     }
   }
 
-  async removeName() {
+  async removeName(): Promise<Message | void> {
     try {
       if (this.args.length !== 2) {
         return await this.message.reply({
@@ -88,7 +88,7 @@ class NameService {
     }
   }
 
-  async listNames() {
+  async listNames(): Promise<Message | void> {
     let type = this.args[1]; //enemy or ally or enemies or allies
     let isEnemy = false;
     switch (type) {

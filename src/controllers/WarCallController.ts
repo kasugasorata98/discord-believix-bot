@@ -9,7 +9,7 @@ class WarCallController {
     this.warCallService = new WarCallService(generalChannel);
   }
 
-  handleProcess() {
+  handleProcess(): void {
     this.warCallService.startWarSuggestTimer();
   }
 }

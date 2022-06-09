@@ -10,7 +10,7 @@ class DiscordClient {
     });
   }
 
-  getClient() {
+  getClient(): DiscordJS.Client<boolean> {
     if (!discordClient) {
       this.setClient();
     }

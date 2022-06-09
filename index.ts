@@ -3,7 +3,7 @@ import BotController from "./src/controllers/BotController";
 import mongoose from "mongoose";
 dotenv.config();
 
-async function main() {
+function main() {
   mongoose
     .connect(process.env.MONGODB_CONNECTION_STRING || "")
     .then(async (res) => {

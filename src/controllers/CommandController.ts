@@ -16,7 +16,7 @@ class CommandController {
     this.timerService = new TimerService(message, args);
   }
 
-  async handleProcess() {
+  async handleProcess(): Promise<void> {
     const command = this.args[0];
     switch (command) {
       case Constants.COMMAND.ADD:
@@ -43,7 +43,7 @@ class CommandController {
     }
   }
 
-  filterChannel(acceptedChannelIds: string[]) {
+  filterChannel(acceptedChannelIds: string[]): boolean {
     const messageChannel = (this.message.channel as TextChannel).name;
     if (messageChannel === Constants.CHANNEL.DEVELOPER) return true;
     return acceptedChannelIds.indexOf(messageChannel) > -1;
