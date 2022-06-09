@@ -22,7 +22,7 @@ class TranslationService {
   async translateToEnglish(message: Message): Promise<void> {
     const [translation] = await this.translate.translate(message.content, "en");
     await message.reply({
-      content: `*Translation*: ${translation}`,
+      content: `**Translation**: *${translation}*`,
     });
   }
 }
