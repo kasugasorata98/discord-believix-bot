@@ -92,6 +92,7 @@ class TimerService {
         const generalChannel = this.discordClient.getChannelByName(
           Constants.CHANNEL.GENERAL
         );
+        this.clearTimer();
         const sentMessage = await generalChannel?.send({
           content:
             "@everyone! Timer is up, their charms are gone! Lets head back in 🤡\n React to 🖐 if you are down to join.",
