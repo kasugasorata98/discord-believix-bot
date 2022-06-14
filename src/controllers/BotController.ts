@@ -5,6 +5,7 @@ import CommandController from "./CommandController";
 import WarCallController from "./WarCallController";
 import DiscordClient from "../lib/DiscordClient";
 import TranslationService from "../services/TranslationService";
+import ItemShopController from "./ItemShopController";
 
 class BotController extends DiscordClient {
   insultService: any;
@@ -21,6 +22,7 @@ class BotController extends DiscordClient {
     this.getClient().on("ready", async (client) => {
       console.log(`Logged in as ${client.user?.tag}!`);
       this.initializeWarCall();
+      this.initializeItemShopController();
     });
     this.getClient().on("messageCreate", (message) => {
       this.handleOnMessageCreated(message);
@@ -34,6 +36,11 @@ class BotController extends DiscordClient {
       const warCallController = new WarCallController(generalChannel);
       warCallController.handleProcess();
     }
+  }
+
+  initializeItemShopController(): void {
+    const itemShopController = new ItemShopController();
+    itemShopController.scheduleScrapping();
   }
 
   async handleOnMessageCreated(

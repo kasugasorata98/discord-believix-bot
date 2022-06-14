@@ -13,9 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/translate": "^6.3.1",
+    "@types/cheerio": "^0.22.31",
     "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.11",
     "discord.js": "^13.7.0",
     "dotenv": "^16.0.1",
+    "moment": "^2.29.3",
     "mongoose": "^6.3.5"
   }
 }
