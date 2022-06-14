@@ -42,16 +42,23 @@ class ItemShopController {
   }
 
   async performScraping(url: string) {
-    const categories = await this.itemShopService.getCategories(url);
-    const shoppingList: ShoppingList[] = [];
-    for (const category of categories) {
-      const items: Item[] = await this.itemShopService.getItems(category);
-      shoppingList.push({
-        category: category.category,
-        items,
-      });
+    try {
+      const categories = await this.itemShopService.getCategories(url);
+      const shoppingList: ShoppingList[] = [];
+      for (const category of categories) {
+        const items: Item[] = await this.itemShopService.getItems(category);
+        shoppingList.push({
+          category: category.category,
+          items,
+        });
+      }
+      this.itemShopService.sendEmbeddedMessages(shoppingList);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.scheduleScrappingForNA();
+      this.scheduleScrappingForDE();
     }
-    this.itemShopService.sendEmbeddedMessages(shoppingList);
   }
 }
 

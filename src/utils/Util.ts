@@ -1,3 +1,4 @@
+import { Collection, Message, Snowflake, TextChannel } from "discord.js";
 import { Name } from "../models/Name";
 
 export const Util = {
@@ -32,5 +33,13 @@ export const Util = {
     let minutes = Math.floor(millis / 60000);
     let seconds = Number(((millis % 60000) / 1000).toFixed(0));
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  },
+  clearChannelMessages: async (channel: TextChannel | null) => {
+    if (channel) {
+      let deleted: Collection<Snowflake, Message>;
+      do {
+        deleted = await channel.bulkDelete(100);
+      } while (deleted.size !== 0);
+    }
   },
 };

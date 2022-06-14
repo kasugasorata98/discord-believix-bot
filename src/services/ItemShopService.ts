@@ -5,6 +5,7 @@ import { Constants } from "../constants";
 import { Category } from "../entities/Category";
 import { Item, ShoppingList } from "../entities/ShoppingList";
 import DiscordClient from "../lib/DiscordClient";
+import { Util } from "../utils/Util";
 
 class ItemShopService extends DiscordClient {
   constructor() {
@@ -83,6 +84,7 @@ class ItemShopService extends DiscordClient {
           console.log("No such category: " + list.category);
           return;
       }
+
       //channel = this.getChannelByName(Constants.CHANNEL.DEVELOPER);
       if (!list.items || list.items?.length === 0) {
         return;
@@ -111,6 +113,11 @@ class ItemShopService extends DiscordClient {
           .setTimestamp();
         embeddedMessages.push(embeddedMessage);
       }
+
+      if (embeddedMessages.length > 0) {
+        await Util.clearChannelMessages(channel);
+      }
+
       const chunkSize = 10;
       for (let i = 0; i < embeddedMessages.length; i += chunkSize) {
         const chunk = embeddedMessages.slice(i, i + chunkSize);
