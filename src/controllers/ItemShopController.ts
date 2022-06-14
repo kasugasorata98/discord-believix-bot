@@ -13,12 +13,13 @@ class ItemShopController {
     //target at 10:05am GMT/UTC
     const target = moment()
       .add(1, "days")
-      .hours(10)
+      .hours(17)
       .minutes(5)
       .startOf("hour")
       .valueOf();
     const current = moment().valueOf();
     let delay = target - current;
+    console.log(delay);
     //delay = 0;
     setTimeout(() => {
       this.performScraping(Constants.ITEM_SHOP.URL.NA);

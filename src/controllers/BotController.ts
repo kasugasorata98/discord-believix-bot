@@ -19,7 +19,7 @@ class BotController extends DiscordClient {
   }
 
   init(): void {
-    this.getClient().on("ready", async (client) => {
+    this.getClient().on("ready", (client) => {
       console.log(`Logged in as ${client.user?.tag}!`);
       this.initializeWarCall();
       this.initializeItemShopController();
