@@ -40,7 +40,8 @@ class BotController extends DiscordClient {
 
   initializeItemShopController(): void {
     const itemShopController = new ItemShopController();
-    itemShopController.scheduleScrapping();
+    itemShopController.scheduleScrappingForNA();
+    itemShopController.scheduleScrappingForDE();
   }
 
   async handleOnMessageCreated(

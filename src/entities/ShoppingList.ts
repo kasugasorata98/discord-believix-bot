@@ -3,6 +3,7 @@ export type Item = {
   itemLink?: string;
   itemImage?: string;
   itemCost: string;
+  itemDiscount?: string;
 };
 
 export type ShoppingList = {

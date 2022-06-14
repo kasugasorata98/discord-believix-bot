@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import BotController from "./src/controllers/BotController";
 import mongoose from "mongoose";
-import moment from "moment";
 dotenv.config();
 
 function main() {
