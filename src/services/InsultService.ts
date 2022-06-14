@@ -1,6 +1,5 @@
 import axios from "axios";
 import DiscordJS from "discord.js";
-import { Insult } from "../entities/InsultResponse";
 import { Name } from "../models/Name";
 import { Util } from "../utils/Util";
 

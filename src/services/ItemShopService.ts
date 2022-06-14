@@ -1,9 +1,9 @@
-import axios from "axios";
 import cheerioModule from "cheerio";
 import { MessageEmbed, TextChannel } from "discord.js";
 import { Constants } from "../constants";
 import { Category } from "../entities/Category";
 import { Item, ShoppingList } from "../entities/ShoppingList";
+import AxiosClient from "../lib/AxiosClient";
 import DiscordClient from "../lib/DiscordClient";
 import { Util } from "../utils/Util";
 
@@ -13,7 +13,7 @@ class ItemShopService extends DiscordClient {
   }
 
   async getCategories(url: string): Promise<Category[]> {
-    const { data: html } = await axios.get(url);
+    const { data: html } = await AxiosClient.get(url);
     const mainPage = cheerioModule.load(html);
 
     const ul = mainPage(".level1");
@@ -42,7 +42,7 @@ class ItemShopService extends DiscordClient {
   }
 
   async getItems(category: any): Promise<Item[]> {
-    const { data: html } = await axios.get(category.link);
+    const { data: html } = await AxiosClient.get(category.link);
     const categoryPage = cheerioModule.load(html);
     const accordion = categoryPage("#accordion");
     const li = accordion.find("li");

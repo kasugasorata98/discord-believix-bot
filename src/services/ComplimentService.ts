@@ -1,7 +1,7 @@
 import { Util } from "../utils/Util";
-import axios from "axios";
 import DiscordJS from "discord.js";
 import { Name } from "../models/Name";
+import AxiosClient from "../lib/AxiosClient";
 
 class ComplimentService {
   async compliment(message: DiscordJS.Message): Promise<void> {
@@ -15,7 +15,7 @@ class ComplimentService {
     if (ally) {
       const name = `***${String(ally).toLowerCase()}***`;
       try {
-        const res = await axios.get("https://complimentr.com/api");
+        const res = await AxiosClient.get("https://complimentr.com/api");
         const data: { compliment: string } = res.data;
         await message.reply({
           content: `${name}, ${data.compliment}`,
