@@ -6,6 +6,7 @@
   "scripts": {
     "start": "forever start -v -c ts-node index.ts",
     "restart": "forever restart -v -c ts-node index.ts",
+    "logs": "forever logs index-ts -f",
     "dev": "nodemon --exec ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
