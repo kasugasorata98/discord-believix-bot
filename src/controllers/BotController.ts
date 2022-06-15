@@ -27,7 +27,7 @@ class BotController extends DiscordClient {
     this.getClient().on("messageCreate", (message) => {
       this.handleOnMessageCreated(message);
     });
-    this.getClient().login(process.env.TOKEN);
+    this.getClient().login(process.env.DISCORD_TOKEN);
   }
 
   initializeWarCall(): void {
