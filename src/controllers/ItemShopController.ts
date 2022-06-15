@@ -21,7 +21,7 @@ class ItemShopController {
     //delay = 0;
     setTimeout(async () => {
       try {
-        this.performScraping(Constants.ITEM_SHOP.URL.NA);
+        await this.performScraping(Constants.ITEM_SHOP.URL.NA);
       } catch (err) {
         console.log(err);
       } finally {
@@ -42,7 +42,7 @@ class ItemShopController {
     //delay = 0;
     setTimeout(async () => {
       try {
-        this.performScraping(Constants.ITEM_SHOP.URL.DE);
+        await this.performScraping(Constants.ITEM_SHOP.URL.DE);
       } catch (err) {
         console.log(err);
       } finally {
