@@ -19,7 +19,6 @@ class ItemShopController {
       .valueOf();
     const current = moment().valueOf();
     let delay = target - current;
-    console.log(delay);
     //delay = 0;
     setTimeout(() => {
       this.performScraping(Constants.ITEM_SHOP.URL.NA);
