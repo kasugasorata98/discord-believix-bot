@@ -10,15 +10,14 @@ class ItemShopController {
   }
 
   async scheduleScrappingForNA() {
-    //target at 10:05am GMT/UTC
-    const target = moment()
-      .add(1, "days")
-      .hours(17)
-      .minutes(5)
-      .startOf("hour")
-      .valueOf();
-    const current = moment().valueOf();
-    let delay = target - current;
+    let target = moment().hours(17).minutes(5);
+    const current = moment();
+    let delay = target.valueOf() - current.valueOf();
+    if (delay < 0) {
+      target.add(1, "day");
+      delay = target.valueOf() - current.valueOf();
+    }
+    console.log(`Scrapping for NA in ${delay} milliseconds`);
     //delay = 0;
     setTimeout(() => {
       this.performScraping(Constants.ITEM_SHOP.URL.NA);
@@ -26,15 +25,14 @@ class ItemShopController {
   }
 
   async scheduleScrappingForDE() {
-    //target at 10:05am GMT/UTC
-    const target = moment()
-      .add(1, "days")
-      .hour(8)
-      .minutes(5)
-      .startOf("hour")
-      .valueOf();
-    const current = moment().valueOf();
-    let delay = target - current;
+    let target = moment().hour(8).minutes(5);
+    const current = moment();
+    let delay = target.valueOf() - current.valueOf();
+    if (delay < 0) {
+      target.add(1, "day");
+      delay = target.valueOf() - current.valueOf();
+    }
+    console.log(`Scrapping for DE in ${delay} milliseconds`);
     //delay = 0;
     setTimeout(() => {
       this.performScraping(Constants.ITEM_SHOP.URL.DE);
