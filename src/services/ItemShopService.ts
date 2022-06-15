@@ -3,7 +3,6 @@ import { MessageEmbed, TextChannel } from "discord.js";
 import { Constants } from "../constants";
 import { Category } from "../entities/Category";
 import { Item, ShoppingList } from "../entities/ShoppingList";
-import AxiosClient from "../lib/AxiosClient";
 import DiscordClient from "../lib/DiscordClient";
 import { Util } from "../utils/Util";
 import * as puppeteer from "puppeteer";
