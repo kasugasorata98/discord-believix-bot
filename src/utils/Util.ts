@@ -5,6 +5,13 @@ export const Util = {
   escapeRegExp: (string: string): string => {
     return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
   },
+  sleep: (delay: number): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, delay);
+    });
+  },
   containsName: (arr: Name[], message: string): boolean | string => {
     for (const name of arr) {
       var regex = "\\b";
