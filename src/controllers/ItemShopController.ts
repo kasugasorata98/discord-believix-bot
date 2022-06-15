@@ -30,7 +30,7 @@ class ItemShopController {
     //target at 10:05am GMT/UTC
     const target = moment()
       .add(1, "days")
-      .hour(1)
+      .hour(8)
       .minutes(5)
       .startOf("hour")
       .valueOf();
