@@ -43,10 +43,14 @@ class ItemShopController {
 
   async performScraping(url: string) {
     try {
-      const categories = await this.itemShopService.getCategories(url);
+      const mainPage = await this.itemShopService.getHtml(url);
+      const categories = await this.itemShopService.getCategories(mainPage);
       const shoppingList: ShoppingList[] = [];
       for (const category of categories) {
-        const items: Item[] = await this.itemShopService.getItems(category);
+        const categoryPage = await this.itemShopService.getHtml(
+          category.link || ""
+        );
+        const items: Item[] = await this.itemShopService.getItems(categoryPage);
         shoppingList.push({
           category: category.category,
           items,

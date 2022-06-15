@@ -2,6 +2,7 @@ import axios from "axios";
 import DiscordJS from "discord.js";
 import { Name } from "../models/Name";
 import { Util } from "../utils/Util";
+import { getRandom } from "random-useragent";
 
 class InsultService {
   async insult(message: DiscordJS.Message): Promise<void> {
@@ -17,7 +18,7 @@ class InsultService {
         enemy = `***${String(enemy).toLowerCase()}***`;
         const axiosInstance = axios.create({
           headers: {
-            "User-Agent": Math.random(),
+            "User-Agent": getRandom(),
           },
         });
         let reply = "";

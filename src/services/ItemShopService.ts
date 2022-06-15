@@ -6,14 +6,27 @@ import { Item, ShoppingList } from "../entities/ShoppingList";
 import AxiosClient from "../lib/AxiosClient";
 import DiscordClient from "../lib/DiscordClient";
 import { Util } from "../utils/Util";
+import * as puppeteer from "puppeteer";
 
 class ItemShopService extends DiscordClient {
   constructor() {
     super();
   }
 
-  async getCategories(url: string): Promise<Category[]> {
-    const { data: html } = await AxiosClient.get(url);
+  async getHtml(url: string): Promise<string> {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    const page = await browser.newPage();
+    await page.goto(url);
+    await page.waitForTimeout(5000);
+    const content = await page.content();
+    await browser.close();
+    return content;
+  }
+
+  async getCategories(html: string): Promise<Category[]> {
     const mainPage = cheerioModule.load(html);
 
     const ul = mainPage(".level1");
@@ -41,8 +54,7 @@ class ItemShopService extends DiscordClient {
     return categories;
   }
 
-  async getItems(category: any): Promise<Item[]> {
-    const { data: html } = await AxiosClient.get(category.link);
+  async getItems(html: string): Promise<Item[]> {
     const categoryPage = cheerioModule.load(html);
     const accordion = categoryPage("#accordion");
     const li = accordion.find("li");
