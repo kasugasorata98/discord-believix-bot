@@ -10,7 +10,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForNA() {
-    let target = moment().hours(17);
+    let target = moment().hours(17).startOf('hour');
     const current = moment();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
@@ -31,7 +31,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForDE() {
-    let target = moment().hour(8);
+    let target = moment().hour(8).startOf('hour');
     const current = moment();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
