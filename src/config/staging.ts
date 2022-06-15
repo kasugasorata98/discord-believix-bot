@@ -18,10 +18,6 @@ const staging = (): Config => {
         "/etc/letsencrypt/live/kasugasorata.monster/cert.pem",
         "utf8"
       ),
-      ca: fs.readFileSync(
-        "/etc/letsencrypt/live/kasugasorata.monster/chain.pem",
-        "utf8"
-      ),
     }),
   };
 };
