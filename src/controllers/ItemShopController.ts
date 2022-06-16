@@ -10,7 +10,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForNA() {
-    let target = moment().hours(17).startOf('hour');
+    let target = moment().hours(17).startOf("hour");
     const current = moment();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
@@ -21,7 +21,9 @@ class ItemShopController {
     //delay = 0;
     setTimeout(async () => {
       try {
+        console.log("Performing Scraping for NA");
         await this.performScraping(Constants.ITEM_SHOP.URL.NA);
+        console.log("Scraping for NA completed");
       } catch (err) {
         console.log(err);
       } finally {
@@ -31,7 +33,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForDE() {
-    let target = moment().hour(8).startOf('hour');
+    let target = moment().hour(8).startOf("hour");
     const current = moment();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
@@ -42,7 +44,9 @@ class ItemShopController {
     //delay = 0;
     setTimeout(async () => {
       try {
+        console.log("Performing Scraping for DE");
         await this.performScraping(Constants.ITEM_SHOP.URL.DE);
+        console.log("Scraping for DE completed");
       } catch (err) {
         console.log(err);
       } finally {
@@ -53,7 +57,9 @@ class ItemShopController {
 
   async performScraping(url: string) {
     const mainPage = await this.itemShopService.getHtml(url);
+    console.log("Obtained main page in HTML");
     const categories = await this.itemShopService.getCategories(mainPage);
+    console.log("Obtained categories");
     const shoppingList: ShoppingList[] = [];
     for (const category of categories) {
       const categoryPage = await this.itemShopService.getHtml(
@@ -65,7 +71,9 @@ class ItemShopController {
         items,
       });
     }
+    console.log("Sending Embedded Messages");
     this.itemShopService.sendEmbeddedMessages(shoppingList);
+    console.log("Embedded Messages has been sent");
   }
 }
 

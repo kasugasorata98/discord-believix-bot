@@ -8,6 +8,9 @@ export const Constants = {
     HOT_OFFERS_EN: "hot-offers-en",
     HOT_OFFERS_DE: "hot-offers-de",
   },
+  CHANNEL_ID: {
+    GENERAL_PROXY: "986844839758946345",
+  },
   ITEM_SHOP: {
     CATEGORY: {
       ITEM_OF_THE_DAY_EN: "Item of the Day",

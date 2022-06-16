@@ -12,6 +12,8 @@ class TranslationService {
   async processMessage(message: Message): Promise<void> {
     const detectedLanguage = await this.detectLanguage(message);
     if (detectedLanguage !== "es") return;
+    console.log("Detected Language: ", detectedLanguage);
+    console.log("Translating to English...");
     this.translateToEnglish(message);
   }
   async detectLanguage(message: Message): Promise<string> {

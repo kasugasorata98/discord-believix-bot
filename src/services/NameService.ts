@@ -36,9 +36,11 @@ class NameService {
         name,
         isEnemy,
       });
+      const msg = `${isEnemy ? "Enemy" : "Ally"} ***${name}*** has been added`;
       await this.message.reply({
-        content: `${isEnemy ? "Enemy" : "Ally"} ***${name}*** has been added`,
+        content: msg,
       });
+      console.log(msg);
     } catch (err: any) {
       console.log(err.code, err.message);
       if (err.code === 11000) {
@@ -77,9 +79,11 @@ class NameService {
           message: `${name} does not exist in database`,
         };
       }
+      const msg = `***${name}*** has been removed`;
       await this.message.reply({
-        content: `***${name}*** has been removed`,
+        content: msg,
       });
+      console.log(msg);
     } catch (err: any) {
       console.log(err.code, err.message);
       return await this.message.reply({

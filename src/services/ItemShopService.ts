@@ -95,13 +95,14 @@ class ItemShopService extends DiscordClient {
           console.log("No such category: " + list.category);
           return;
       }
-
+      console.log("Category: ", list.category);
       //channel = this.getChannelByName(Constants.CHANNEL.DEVELOPER);
       if (!list.items || list.items?.length === 0) {
         return;
       }
       const embeddedMessages: MessageEmbed[] = [];
       for (const item of list.items) {
+        console.log("Item: ", `Name: ${item.itemName} Cost: ${item.itemCost}`);
         const embeddedMessage = new MessageEmbed()
           .setAuthor({ name: "Believix [Bot]" })
           .setDescription(list.category)

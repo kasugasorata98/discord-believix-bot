@@ -18,6 +18,7 @@ class TimerService {
   async handleTimer(): Promise<void> {
     switch (this.args[1]) {
       case "set":
+        console.log("Setting timer");
         this.setTimer();
         break;
       case "get":
@@ -25,9 +26,11 @@ class TimerService {
         break;
       case "remove":
         this.clearTimer();
+        const msg = "Timer has been removed";
         await this.message.reply({
-          content: "Timer has been removed",
+          content: msg,
         });
+        console.log(msg);
         break;
       default:
         await this.message.reply({
@@ -100,9 +103,11 @@ class TimerService {
         await sentMessage?.react("🖐");
       }, delay);
       startTimeMS = new Date().getTime();
+      const msg = "Timer has been set.";
       await this.message.reply({
-        content: "Timer has been set.",
+        content: msg,
       });
+      console.log(msg);
     } catch (err: any) {
       console.log(err.code, err.message);
       return await this.message.reply({

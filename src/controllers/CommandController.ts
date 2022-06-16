@@ -18,6 +18,9 @@ class CommandController {
 
   async handleProcess(): Promise<void> {
     const command = this.args[0];
+    console.log(
+      `Command: ${command} was called by ${this.message.author.username}`
+    );
     switch (command) {
       case Constants.COMMAND.ADD:
         if (!this.filterChannel([Constants.CHANNEL.PERMA_SPAWN_LIST])) return;
