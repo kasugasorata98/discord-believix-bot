@@ -5,7 +5,17 @@ import { Category } from "../../entities/Category";
 import { Item, ShoppingList } from "../../entities/ShoppingList";
 import DiscordClient from "../../lib/DiscordClient";
 import { Util } from "../../utils/Util";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import { PuppeteerExtraPluginRecaptcha } from "puppeteer-extra-plugin-recaptcha";
+puppeteer.use(
+  new PuppeteerExtraPluginRecaptcha({
+    provider: {
+      id: "2captcha",
+      token: "566e76741ea21533d971216826730bec",
+    },
+    visualFeedback: true, // colorize reCAPTCHAs (violet = detected, green = solved)
+  })
+);
 
 class ItemShopService extends DiscordClient {
   constructor() {
@@ -18,8 +28,14 @@ class ItemShopService extends DiscordClient {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
-    await page.goto(url);
-    await page.waitForTimeout(5000);
+    await page.goto(url, {
+      waitUntil: 'networkidle0',
+    });
+    const captcha = await page.solveRecaptchas();
+    console.log(captcha);
+    await page.waitForNavigation({
+      waitUntil: 'networkidle0',
+    });
     const content = await page.content();
     await browser.close();
     console.log(content);
