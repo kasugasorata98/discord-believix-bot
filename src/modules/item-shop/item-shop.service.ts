@@ -22,12 +22,12 @@ class ItemShopService extends DiscordClient {
     await page.waitForTimeout(5000);
     const content = await page.content();
     await browser.close();
+    console.log(content);
     return content;
   }
 
   async getCategories(html: string): Promise<Category[]> {
     const mainPage = cheerioModule.load(html);
-
     const ul = mainPage(".level1");
     const categories: Category[] = [];
     ul.each((_index, element) => {
