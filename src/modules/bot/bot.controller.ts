@@ -5,7 +5,7 @@ import CommandController from "../command/command.controller";
 import WarCallController from "../war-call/war-call.controller";
 import DiscordClient from "../../lib/DiscordClient";
 import ItemShopController from "../item-shop/item-shop.controller";
-import ProxyController from "../proxy/proxy.controller";
+import ProxyController from "../../dump/proxy/proxy.controller";
 import TranslationController from "../translation/translation.controller";
 
 class BotController extends DiscordClient {
@@ -68,7 +68,6 @@ class BotController extends DiscordClient {
       this.translationController.processTranslation(message);
       this.complimentService.compliment(message);
       this.insultService.insult(message);
-      this.proxyController.handleProxy(message);
     }
   }
 

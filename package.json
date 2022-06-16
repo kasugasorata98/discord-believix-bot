@@ -24,6 +24,8 @@
     "moment": "^2.29.3",
     "mongoose": "^6.3.5",
     "puppeteer": "^14.4.0",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-recaptcha": "^3.5.0",
     "random-useragent": "^0.5.0"
   },
   "devDependencies": {

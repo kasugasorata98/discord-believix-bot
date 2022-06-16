@@ -7,6 +7,7 @@ export const Constants = {
     ITEM_OF_THE_DAY_DE: "item-of-the-day-de",
     HOT_OFFERS_EN: "hot-offers-en",
     HOT_OFFERS_DE: "hot-offers-de",
+    SESAME_PROXY: "sesame-proxy",
   },
   CHANNEL_ID: {
     GENERAL_PROXY: "986844839758946345",
