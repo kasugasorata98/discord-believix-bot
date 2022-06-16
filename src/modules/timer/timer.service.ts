@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
-import { Constants } from "../constants";
-import DiscordClient from "../lib/DiscordClient";
-import { Util } from "../utils/Util";
+import { Constants } from "../../constants";
+import DiscordClient from "../../lib/DiscordClient";
+import { Util } from "../../utils/Util";
 
 let timer: string | number | NodeJS.Timeout | null | undefined = null;
 let startTimeMS = 0;

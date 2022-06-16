@@ -1,23 +1,24 @@
 import DiscordJS, { Message, TextChannel } from "discord.js";
-import ComplimentService from "../services/ComplimentService";
-import InsultService from "../services/InsultService";
-import CommandController from "./CommandController";
-import WarCallController from "./WarCallController";
-import DiscordClient from "../lib/DiscordClient";
-import TranslationService from "../services/TranslationService";
-import ItemShopController from "./ItemShopController";
-import ProxyController from "./ProxyController";
+import ComplimentService from "../compliment/compliment.service";
+import InsultService from "../insult/insult.service";
+import CommandController from "../command/command.controller";
+import WarCallController from "../war-call/war-call.controller";
+import DiscordClient from "../../lib/DiscordClient";
+import ItemShopController from "../item-shop/item-shop.controller";
+import ProxyController from "../proxy/proxy.controller";
+import TranslationController from "../translation/translation.controller";
 
 class BotController extends DiscordClient {
   insultService: any;
   complimentService: any;
-  translationService: TranslationService;
+
   proxyController: ProxyController;
+  translationController: TranslationController;
   constructor() {
     super();
     this.insultService = new InsultService();
     this.complimentService = new ComplimentService();
-    this.translationService = new TranslationService();
+    this.translationController = new TranslationController();
     this.proxyController = new ProxyController();
   }
 
@@ -35,7 +36,6 @@ class BotController extends DiscordClient {
   }
 
   initializeWarCall(): void {
-    console.log("Initializing War Call");
     const generalChannel: TextChannel | null = this.getChannelByName("general");
     if (generalChannel) {
       const warCallController = new WarCallController(generalChannel);
@@ -56,7 +56,6 @@ class BotController extends DiscordClient {
       return;
     }
     if (message.content.includes("<@982060525267603494>")) {
-      console.log("Someone tagged the bot");
       // tagging the bot response
       return await message.reply({
         content: "Wtf do you want from me 🤬?",
@@ -66,7 +65,7 @@ class BotController extends DiscordClient {
       const args = message.content.slice(1).split(/ +/); //removes ! and split into array
       this.handleCommands(args, message);
     } else {
-      this.translationService.processMessage(message);
+      this.translationController.processTranslation(message);
       this.complimentService.compliment(message);
       this.insultService.insult(message);
       this.proxyController.handleProxy(message);

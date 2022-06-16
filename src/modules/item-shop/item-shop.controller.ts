@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Constants } from "../constants";
-import { ShoppingList, Item } from "../entities/ShoppingList";
-import ItemShopService from "../services/ItemShopService";
+import { Constants } from "../../constants";
+import { ShoppingList, Item } from "../../entities/ShoppingList";
+import ItemShopService from "./item-shop.service";
 
 class ItemShopController {
   itemShopService: ItemShopService;

@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import WarCallService from "../services/WarCallService";
+import WarCallService from "./war-call.service";
 
 class WarCallController {
   generalChannel: TextChannel;

@@ -1,7 +1,7 @@
 import axios from "axios";
 import DiscordJS from "discord.js";
-import { Name } from "../models/Name";
-import { Util } from "../utils/Util";
+import { Name } from "../../models/Name";
+import { Util } from "../../utils/Util";
 import { getRandom } from "random-useragent";
 
 class InsultService {

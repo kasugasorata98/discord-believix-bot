@@ -1,6 +1,6 @@
-import { Name } from "../models/Name";
+import { Name } from "../../models/Name";
 import DiscordJS, { Message } from "discord.js";
-import { Constants } from "../constants";
+import { Constants } from "../../constants";
 
 class NameService {
   message: DiscordJS.Message;

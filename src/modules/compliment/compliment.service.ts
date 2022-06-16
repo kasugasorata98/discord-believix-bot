@@ -1,7 +1,7 @@
-import { Util } from "../utils/Util";
+import { Util } from "../../utils/Util";
 import DiscordJS from "discord.js";
-import { Name } from "../models/Name";
-import AxiosClient from "../lib/AxiosClient";
+import { Name } from "../../models/Name";
+import AxiosClient from "../../lib/AxiosClient";
 
 class ComplimentService {
   async compliment(message: DiscordJS.Message): Promise<void> {

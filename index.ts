@@ -1,4 +1,4 @@
-import BotController from "./src/controllers/BotController";
+import BotController from "./src/modules/bot/bot.controller";
 import mongoose from "mongoose";
 
 async function main() {

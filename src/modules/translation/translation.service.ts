@@ -9,23 +9,16 @@ class TranslationService {
       projectId: process.env.CLOUD_TRANSLATION_PROJECT,
     });
   }
-  async processMessage(message: Message): Promise<void> {
-    const detectedLanguage = await this.detectLanguage(message);
-    if (detectedLanguage !== "es") return;
-    console.log("Detected Language: ", detectedLanguage);
-    console.log("Translating to English...");
-    this.translateToEnglish(message);
-  }
+
   async detectLanguage(message: Message): Promise<string> {
     const languageDetected = (await this.translate.detect(message.content))[0]
       .language as string;
     return languageDetected;
   }
-  async translateToEnglish(message: Message): Promise<void> {
+  async translateToEnglish(message: Message): Promise<string> {
     const [translation] = await this.translate.translate(message.content, "en");
-    await message.reply({
-      content: `**Translation**: *${translation}*`,
-    });
+    console.log("Translation: ", translation);
+    return translation;
   }
 }
 

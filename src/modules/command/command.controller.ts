@@ -1,7 +1,7 @@
 import DiscordJS, { TextChannel } from "discord.js";
-import { Constants } from "../constants";
-import NameService from "../services/NameService";
-import TimerService from "../services/TimerService";
+import { Constants } from "../../constants";
+import NameService from "../name/name.service";
+import TimerService from "../timer/timer.service";
 
 class CommandController {
   message: DiscordJS.Message;

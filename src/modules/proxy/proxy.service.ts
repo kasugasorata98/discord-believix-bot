@@ -1,5 +1,5 @@
 import { Message, TextChannel } from "discord.js";
-import DiscordClient from "../lib/DiscordClient";
+import DiscordClient from "../../lib/DiscordClient";
 
 class ProxyService extends DiscordClient {
   constructor() {
