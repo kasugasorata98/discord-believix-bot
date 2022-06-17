@@ -10,8 +10,8 @@ import { PuppeteerExtraPluginRecaptcha } from "puppeteer-extra-plugin-recaptcha"
 puppeteer.use(
   new PuppeteerExtraPluginRecaptcha({
     provider: {
-      id: "2captcha",
-      token: "566e76741ea21533d971216826730bec",
+      id: process.env.PUPPETEER_RECAPTCHA_ID,
+      token: process.env.PUPPETEER_RECAPTCHA_TOKEN,
     },
     visualFeedback: true, // colorize reCAPTCHAs (violet = detected, green = solved)
   })
