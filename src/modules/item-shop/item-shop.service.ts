@@ -18,11 +18,30 @@ class ItemShopService extends DiscordClient {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
-    await page.goto(url);
-    await page.waitForTimeout(5000);
+    page.setDefaultNavigationTimeout(0);
+    await page.setRequestInterception(true);
+    page.on("request", (req) => {
+      if (
+        req.resourceType() == "stylesheet" ||
+        req.resourceType() == "font" ||
+        req.resourceType() == "image"
+      ) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+    await page.evaluateOnNewDocument(() => {
+      // Pass webdriver check
+      Object.defineProperty(navigator, "webdriver", {
+        get: () => false,
+      });
+    });
+
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 0 });
     const content = await page.content();
     await browser.close();
-    console.log(content);
+    //console.log(content);
     return content;
   }
 
@@ -77,19 +96,27 @@ class ItemShopService extends DiscordClient {
 
   async sendEmbeddedMessages(shoppingList: ShoppingList[]): Promise<void> {
     for (const list of shoppingList) {
-      let channel: TextChannel | null;
+      let channel: TextChannel;
       switch (list.category) {
         case Constants.ITEM_SHOP.CATEGORY.ITEM_OF_THE_DAY_EN:
-          channel = this.getChannelByName(Constants.CHANNEL.ITEM_OF_THE_DAY_EN);
+          channel = this.getChannelByName(
+            Constants.CHANNEL.ITEM_OF_THE_DAY_EN
+          ) as TextChannel;
           break;
         case Constants.ITEM_SHOP.CATEGORY.ITEM_OF_THE_DAY_DE:
-          channel = this.getChannelByName(Constants.CHANNEL.ITEM_OF_THE_DAY_DE);
+          channel = this.getChannelByName(
+            Constants.CHANNEL.ITEM_OF_THE_DAY_DE
+          ) as TextChannel;
           break;
         case Constants.ITEM_SHOP.CATEGORY.HOT_OFFERS_EN:
-          channel = this.getChannelByName(Constants.CHANNEL.HOT_OFFERS_EN);
+          channel = this.getChannelByName(
+            Constants.CHANNEL.HOT_OFFERS_EN
+          ) as TextChannel;
           break;
         case Constants.ITEM_SHOP.CATEGORY.HOT_OFFERS_DE:
-          channel = this.getChannelByName(Constants.CHANNEL.HOT_OFFERS_DE);
+          channel = this.getChannelByName(
+            Constants.CHANNEL.HOT_OFFERS_DE
+          ) as TextChannel;
           break;
         default:
           console.log("No such category: " + list.category);
@@ -101,11 +128,14 @@ class ItemShopService extends DiscordClient {
         return;
       }
       const embeddedMessages: MessageEmbed[] = [];
+      list.items.sort(function (a: Item, b: Item) {
+        return a.itemName.length - b.itemName.length;
+      })[0].itemName.length;
       for (const item of list.items) {
         console.log("Item: ", `Name: ${item.itemName} Cost: ${item.itemCost}`);
         const embeddedMessage = new MessageEmbed()
-          .setAuthor({ name: "Believix [Bot]" })
           .setDescription(list.category)
+          .setThumbnail(item.itemImage || "")
           .setColor("#0099ff")
           .setTitle(item.itemName)
           .setURL(item.itemLink || "")
@@ -120,10 +150,9 @@ class ItemShopService extends DiscordClient {
               value: item.itemDiscount || "0%",
               inline: true,
             }
-          )
-          .setImage(item.itemImage || "")
-          .setTimestamp();
+          );
         embeddedMessages.push(embeddedMessage);
+        await Util.sleep(100);
       }
 
       if (embeddedMessages.length > 0) {
@@ -140,6 +169,7 @@ class ItemShopService extends DiscordClient {
         }
       }
     }
+
     const generalChannel: TextChannel | null = this.getChannelByName(
       Constants.CHANNEL.GENERAL
     );
