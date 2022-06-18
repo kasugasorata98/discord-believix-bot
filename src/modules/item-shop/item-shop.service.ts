@@ -49,11 +49,11 @@ class ItemShopService extends DiscordClient {
     });
 
     await page.goto(url, { waitUntil: "networkidle2", timeout: 0 });
-    const captcha = await page.solveRecaptchas();
-    console.log(captcha);
-    await page.waitForNavigation({
-      waitUntil: "networkidle2",
-    });
+    // const captcha = await page.solveRecaptchas();
+    // console.log(captcha);
+    // await page.waitForNavigation({
+    //   waitUntil: "networkidle2",
+    // });
     const content = await page.content();
     await browser.close();
     //console.log(content);
