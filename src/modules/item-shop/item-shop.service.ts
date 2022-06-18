@@ -6,16 +6,6 @@ import { Item, ShoppingList } from "../../entities/ShoppingList";
 import DiscordClient from "../../lib/DiscordClient";
 import { Util } from "../../utils/Util";
 import puppeteer from "puppeteer-extra";
-import { PuppeteerExtraPluginRecaptcha } from "puppeteer-extra-plugin-recaptcha";
-puppeteer.use(
-  new PuppeteerExtraPluginRecaptcha({
-    provider: {
-      id: process.env.PUPPETEER_RECAPTCHA_ID,
-      token: process.env.PUPPETEER_RECAPTCHA_TOKEN,
-    },
-    visualFeedback: true, // colorize reCAPTCHAs (violet = detected, green = solved)
-  })
-);
 
 class ItemShopService extends DiscordClient {
   constructor() {
@@ -49,8 +39,6 @@ class ItemShopService extends DiscordClient {
     });
 
     await page.goto(url, { waitUntil: "networkidle2", timeout: 0 });
-    const captcha = await page.solveRecaptchas();
-    console.log(captcha);
     await page.waitForNavigation({
       waitUntil: "networkidle2",
     });

@@ -10,14 +10,14 @@ class ItemShopController {
   }
 
   async scheduleScrappingForNA() {
-    let target = moment().utc().hours(17).minutes(5);
+    let target = moment().utc().hour(17).minute(5);
     const current = moment().utc();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
       target.add(1, "day");
       delay = target.valueOf() - current.valueOf();
     }
-    console.log(`Scrapping for NA in ${delay} milliseconds`);
+    console.log(`Scrapping for NA in ${delay} milliseconds, ${target}`);
     //delay = 0;
     setTimeout(async () => {
       try {
@@ -33,14 +33,14 @@ class ItemShopController {
   }
 
   async scheduleScrappingForDE() {
-    let target = moment().utc().hour(8).minutes(5);
+    let target = moment().utc().hour(8).minute(5);
     const current = moment().utc();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
       target.add(1, "day");
       delay = target.valueOf() - current.valueOf();
     }
-    console.log(`Scrapping for DE in ${delay} milliseconds`);
+    console.log(`Scrapping for DE in ${delay} milliseconds, ${target}`);
     //delay = 0;
     setTimeout(async () => {
       try {
