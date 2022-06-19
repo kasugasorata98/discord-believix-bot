@@ -17,6 +17,7 @@ class ItemShopService extends DiscordClient {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+    console.log('Browser opened');
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
     await page.setRequestInterception(true);
@@ -72,6 +73,7 @@ class ItemShopService extends DiscordClient {
         }
       });
     });
+    console.log("Categories Obtained: ", categories)
     return categories;
   }
 
@@ -94,6 +96,7 @@ class ItemShopService extends DiscordClient {
         itemDiscount,
       });
     });
+    console.log("Items Obtained: ", items)
     return items;
   }
 
@@ -128,6 +131,7 @@ class ItemShopService extends DiscordClient {
       console.log("Category: ", list.category);
       //channel = this.getChannelByName(Constants.CHANNEL.DEVELOPER);
       if (!list.items || list.items?.length === 0) {
+        console.log('list.items is empty');
         return;
       }
       const embeddedMessages: MessageEmbed[] = [];

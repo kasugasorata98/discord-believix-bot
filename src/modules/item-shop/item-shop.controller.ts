@@ -72,7 +72,7 @@ class ItemShopController {
       });
     }
     console.log("Sending Embedded Messages");
-    this.itemShopService.sendEmbeddedMessages(shoppingList);
+    await this.itemShopService.sendEmbeddedMessages(shoppingList);
     console.log("Embedded Messages has been sent");
   }
 }
