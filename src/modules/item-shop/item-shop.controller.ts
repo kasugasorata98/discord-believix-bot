@@ -10,7 +10,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForNA() {
-    let target = moment().utc().hour(17).minute(5);
+    let target = moment().utc().hour(17).minute(5).startOf('minute');
     const current = moment().utc();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
@@ -33,7 +33,7 @@ class ItemShopController {
   }
 
   async scheduleScrappingForDE() {
-    let target = moment().utc().hour(8).minute(5);
+    let target = moment().utc().hour(8).minute(5).startOf('minute');
     const current = moment().utc();
     let delay = target.valueOf() - current.valueOf();
     if (delay < 0) {
