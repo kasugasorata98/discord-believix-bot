@@ -12,7 +12,14 @@ class TranslationController {
       message
     );
     console.log("Detected Language: ", detectedLanguage);
-    if (detectedLanguage !== 'es' && detectedLanguage !== 'pt' && detectedLanguage !== 'zh') return;
+    if (
+      detectedLanguage !== 'es' &&
+      detectedLanguage !== 'pt' &&
+      detectedLanguage !== 'zh' &&
+      detectedLanguage !== 'zh-CN' &&
+      detectedLanguage !== 'zh-Hans' &&
+      detectedLanguage !== 'zh-CHS'
+    ) return;
     console.log("Translating to English...");
     const translation = await this.translationService.translateToEnglish(
       message
