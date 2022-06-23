@@ -11,8 +11,8 @@ class TranslationController {
     const detectedLanguage = await this.translationService.detectLanguage(
       message
     );
-    if (detectedLanguage !== 'es' && detectedLanguage !== 'pt') return;
     console.log("Detected Language: ", detectedLanguage);
+    if (detectedLanguage !== 'es' && detectedLanguage !== 'pt') return;
     console.log("Translating to English...");
     const translation = await this.translationService.translateToEnglish(
       message
