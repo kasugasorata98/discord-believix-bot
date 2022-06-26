@@ -1,20 +1,18 @@
+import { getConfig } from "./src/config";
+import MongooseClient from "./src/lib/MongooseClient";
 import BotController from "./src/modules/bot/bot.controller";
-import mongoose from "mongoose";
 
-async function main() {
-  mongoose
-    .connect(process.env.MONGODB_CONNECTION_STRING || "")
-    .then(async (res) => {
-      console.log("MongoDB connected to " + res.connections[0].name);
-      const botController = new BotController();
-      botController.init();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+MongooseClient
+  .connect(getConfig.mongoDBString)
+  .then(async (res) => {
+    console.log("MongoDB connected to " + res.connections[0].name);
 
-main();
+    const botController = new BotController();
+    botController.init();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 process.on("uncaughtException", async (error) => {
   console.log(error);

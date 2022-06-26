@@ -1,13 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
-export interface Name {
+export interface Community {
   name: string;
   isEnemy: boolean;
 }
 
-export const Name = mongoose.model(
-  "name",
-  new Schema<Name>(
+export const Community = mongoose.model(
+  "Community",
+  new Schema<Community>(
     {
       name: {
         type: String,

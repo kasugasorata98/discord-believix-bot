@@ -1,17 +1,21 @@
 import axios from "axios";
 import DiscordJS from "discord.js";
-import { Name } from "../../models/Name";
+import { Community } from "../../models/Community";
 import { Util } from "../../utils/Util";
 import { getRandom } from "random-useragent";
 
 class InsultService {
+  functionId: string;
+  constructor() {
+    this.functionId = '62b73f0b283607337e0d192c';
+  }
   async insult(message: DiscordJS.Message): Promise<void> {
-    const names = await Name.find({
+    const community = await Community.find({
       isEnemy: true,
     });
-    if (!names) return;
+    if (!community) return;
 
-    let enemy: string | boolean = Util.containsName(names, message.content);
+    let enemy: string | boolean = Util.containsName(community, message.content);
 
     if (enemy) {
       try {
@@ -32,8 +36,7 @@ class InsultService {
           }
           case 1: {
             const res = await axiosInstance.get(
-              `https://evilinsult.com/generate_insult.php?lang=${
-                Math.random() * 2 === 0 ? "en" : "es"
+              `https://evilinsult.com/generate_insult.php?lang=${Math.random() * 2 === 0 ? "en" : "es"
               }`
             );
             reply = `${enemy} ${Util.uncapitalizeFirstLetter(res.data)}`;

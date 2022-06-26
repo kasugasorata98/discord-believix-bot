@@ -1,4 +1,4 @@
-import { Name } from "../../models/Name";
+import { Community } from "../../models/Community";
 import DiscordJS, { Message } from "discord.js";
 import { Constants } from "../../constants";
 
@@ -32,7 +32,7 @@ class NameService {
         });
       }
       const isEnemy = this.args[1].toLowerCase() === "enemy" ? true : false;
-      await Name.create({
+      await Community.create({
         name,
         isEnemy,
       });
@@ -70,7 +70,7 @@ class NameService {
         });
       }
       name = this.args[1].toLowerCase().trim();
-      const res = await Name.deleteOne({
+      const res = await Community.deleteOne({
         name,
       });
       if (res.deletedCount === 0) {
@@ -111,7 +111,7 @@ class NameService {
         });
     }
     try {
-      const res = await Name.find({
+      const res = await Community.find({
         isEnemy,
       }).select("name");
       let list = "";

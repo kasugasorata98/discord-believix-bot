@@ -3,7 +3,9 @@ import TranslationService from "./translation.service";
 
 class TranslationController {
   translationService: TranslationService;
+  functionId: string;
   constructor() {
+    this.functionId = '62b73ecb283607337e0d1924';
     this.translationService = new TranslationService();
   }
 

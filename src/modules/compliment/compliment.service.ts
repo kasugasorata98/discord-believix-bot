@@ -1,16 +1,20 @@
 import { Util } from "../../utils/Util";
 import DiscordJS from "discord.js";
-import { Name } from "../../models/Name";
+import { Community } from "../../models/Community";
 import AxiosClient from "../../lib/AxiosClient";
 
 class ComplimentService {
+  functionId: string;
+  constructor() {
+    this.functionId = '62b73f0d283607337e0d192e';
+  }
   async compliment(message: DiscordJS.Message): Promise<void> {
-    const names = await Name.find({
+    const community = await Community.find({
       isEnemy: false,
     });
-    if (!names) return;
+    if (!community) return;
 
-    const ally: string | boolean = Util.containsName(names, message.content);
+    const ally: string | boolean = Util.containsName(community, message.content);
 
     if (ally) {
       const name = `***${String(ally).toLowerCase()}***`;

@@ -1,5 +1,6 @@
 import { Collection, Message, Snowflake, TextChannel } from "discord.js";
-import { Name } from "../models/Name";
+import { Community } from "../models/Community";
+import Readline from 'readline';
 
 export const Util = {
   escapeRegExp: (string: string): string => {
@@ -12,14 +13,14 @@ export const Util = {
       }, delay);
     });
   },
-  containsName: (arr: Name[], message: string): boolean | string => {
-    for (const name of arr) {
+  containsName: (arr: Community[], message: string): boolean | string => {
+    for (const community of arr) {
       var regex = "\\b";
-      regex += Util.escapeRegExp(name.name);
+      regex += Util.escapeRegExp(community.name);
       regex += "\\b";
       const found = new RegExp(regex, "i").test(message);
       if (found) {
-        return name.name;
+        return community.name;
       }
     }
     return false;
@@ -57,5 +58,17 @@ export const Util = {
         }
       } while (deleted.size !== 0);
     }
+  },
+  askQuestion: (question: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const readline = Readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+      readline.question(question, reply => {
+        readline.close();
+        resolve(reply);
+      })
+    })
   },
 };

@@ -7,13 +7,16 @@ import DiscordClient from "../../lib/DiscordClient";
 import ItemShopController from "../item-shop/item-shop.controller";
 import ProxyController from "../../dump/proxy/proxy.controller";
 import TranslationController from "../translation/translation.controller";
+import { Guild } from "../../models/Guild";
+import { HydratedDocument } from "mongoose";
+import { Channel } from "../../models/Channel";
 
 class BotController extends DiscordClient {
-  insultService: any;
-  complimentService: any;
-
+  insultService: InsultService;
+  complimentService: ComplimentService;
   proxyController: ProxyController;
   translationController: TranslationController;
+  guilds: HydratedDocument<Guild>[] = [];
   constructor() {
     super();
     this.insultService = new InsultService();
@@ -22,17 +25,24 @@ class BotController extends DiscordClient {
     this.proxyController = new ProxyController();
   }
 
-  init(): void {
-    this.getClient().on("ready", (client) => {
-      console.log(`Logged in as ${client.user?.tag}!`);
-      this.initializeWarCall();
-      this.initializeItemShopController();
-    });
+  async init(): Promise<void> {
+    await this.initializeDiscordClient();
+    await this.initializeGuilds();
+    this.initializeWarCall();
+    this.initializeItemShopController();
+  }
+
+  async initializeDiscordClient(): Promise<void> {
     this.getClient().on("messageCreate", (message) => {
-      console.log(`${message.author.username}: ${message.content}`);
       this.handleOnMessageCreated(message);
     });
-    this.getClient().login(process.env.DISCORD_TOKEN);
+    console.log('Discord Bot is logging in...')
+    await this.getClient().login(process.env.DISCORD_TOKEN);
+    console.log('Discord Bot has logged in');
+  }
+
+  async initializeGuilds(): Promise<void> {
+    this.guilds = await Guild.find().populate('functionalities').populate('channels');
   }
 
   initializeWarCall(): void {
@@ -52,6 +62,7 @@ class BotController extends DiscordClient {
   async handleOnMessageCreated(
     message: DiscordJS.Message
   ): Promise<Message | void> {
+    // console.log(message);
     if (message.author.bot === true) {
       return;
     }
@@ -61,19 +72,40 @@ class BotController extends DiscordClient {
         content: "Wtf do you want from me 🤬?",
       });
     }
+
     if (message.content.startsWith("!")) {
       const args = message.content.slice(1).split(/ +/); //removes ! and split into array
       this.handleCommands(args, message);
     } else {
-      this.translationController.processTranslation(message);
-      this.complimentService.compliment(message);
-      this.insultService.insult(message);
+      this.handleFunctions(message);
     }
   }
 
   handleCommands(args: string[], message: DiscordJS.Message): void {
     const commandController = new CommandController(args, message);
     commandController.handleProcess();
+  }
+
+  handleFunctions(message: Message): void {
+    const guild = this.getGuild(message);
+    const functionalities = guild?.functionalities;
+    if (functionalities?.find(function_ => function_._id.toString() === this.translationController.functionId)) {
+      const channels = guild?.channels as unknown as HydratedDocument<Channel>[];
+      if (channels?.find(channel => channel.channelId === message.channelId)) {
+        this.translationController.processTranslation(message);
+      }
+    }
+    if (functionalities?.find(function_ => function_._id.toString() === this.complimentService.functionId)) {
+      this.complimentService.compliment(message);
+    }
+    if (functionalities?.find(function_ => function_._id.toString() === this.insultService.functionId)) {
+      this.insultService.insult(message);
+    }
+  }
+
+  getGuild(message: Message): HydratedDocument<Guild> | undefined {
+    const guild = this.guilds.find(guild => guild.guildId === message.guildId);
+    return guild;
   }
 }
 
