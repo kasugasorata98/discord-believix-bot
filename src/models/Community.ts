@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-export interface Community {
+interface Community {
   name: string;
   isEnemy: boolean;
 }

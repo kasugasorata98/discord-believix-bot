@@ -1,13 +1,13 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { PopulatedDoc, Schema } from "mongoose";
+import Functionality from "./Functionality";
 
-export interface Channel {
+interface Channel {
     channelId: string;
     channelName: string;
-    guildId?: mongoose.Types.ObjectId
+    functionalities: PopulatedDoc<Functionality>[] | Schema.Types.ObjectId[] | [];
 }
 
-export const Channel = mongoose.model(
-    "Channel",
+const schema =
     new Schema<Channel>(
         {
             channelId: {
@@ -19,9 +19,15 @@ export const Channel = mongoose.model(
                 type: String,
                 required: true,
             },
+            functionalities: [{
+                type: Schema.Types.ObjectId,
+                ref: Functionality
+            }]
         },
         {
             timestamps: true,
         }
     )
-);
+
+const Channel = mongoose.model('Channel', schema);
+export default Channel;

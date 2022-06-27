@@ -1,5 +1,4 @@
 import { Collection, Message, Snowflake, TextChannel } from "discord.js";
-import { Community } from "../models/Community";
 import Readline from 'readline';
 
 export const Util = {
@@ -13,7 +12,7 @@ export const Util = {
       }, delay);
     });
   },
-  containsName: (arr: Community[], message: string): boolean | string => {
+  containsName: (arr: any[], message: string): boolean | string => {
     for (const community of arr) {
       var regex = "\\b";
       regex += Util.escapeRegExp(community.name);

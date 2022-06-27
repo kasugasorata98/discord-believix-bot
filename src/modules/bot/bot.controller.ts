@@ -9,7 +9,6 @@ import ProxyController from "../../dump/proxy/proxy.controller";
 import TranslationController from "../translation/translation.controller";
 import { Guild } from "../../models/Guild";
 import { HydratedDocument } from "mongoose";
-import { Channel } from "../../models/Channel";
 
 class BotController extends DiscordClient {
   insultService: InsultService;
@@ -37,8 +36,12 @@ class BotController extends DiscordClient {
       this.handleOnMessageCreated(message);
     });
     console.log('Discord Bot is logging in...')
-    await this.getClient().login(process.env.DISCORD_TOKEN);
-    console.log('Discord Bot has logged in');
+    this.getClient().login(process.env.DISCORD_TOKEN);
+    this.getClient().on('ready', async () => {
+      console.log('Discord Bot Logged in');
+      await this.getChannelMessages('971429249837846580');
+      await this.getChannelMessages('982065262360657940');
+    })
   }
 
   async initializeGuilds(): Promise<void> {
@@ -87,26 +90,15 @@ class BotController extends DiscordClient {
   }
 
   handleFunctions(message: Message): void {
-    const guild = this.getGuild(message);
-    const functionalities = guild?.functionalities;
-    if (functionalities?.find(function_ => function_._id.toString() === this.translationController.functionId)) {
-      const channels = guild?.channels as unknown as HydratedDocument<Channel>[];
-      if (channels?.find(channel => channel.channelId === message.channelId)) {
-        this.translationController.processTranslation(message);
-      }
-    }
-    if (functionalities?.find(function_ => function_._id.toString() === this.complimentService.functionId)) {
-      this.complimentService.compliment(message);
-    }
-    if (functionalities?.find(function_ => function_._id.toString() === this.insultService.functionId)) {
-      this.insultService.insult(message);
-    }
+
+    this.translationController.processTranslation(message);
+
+    this.complimentService.compliment(message);
+
+    this.insultService.insult(message);
+
   }
 
-  getGuild(message: Message): HydratedDocument<Guild> | undefined {
-    const guild = this.guilds.find(guild => guild.guildId === message.guildId);
-    return guild;
-  }
 }
 
 export default BotController;

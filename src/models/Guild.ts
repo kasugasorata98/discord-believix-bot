@@ -1,12 +1,10 @@
-import mongoose, { Schema } from "mongoose";
-import { Channel } from "./Channel";
-import { Functionality } from "./Functionality";
+import mongoose, { PopulatedDoc, Schema } from "mongoose";
+import Channel from "./Channel";
 
 export interface Guild {
     name: string;
     guildId: string;
-    functionalities: mongoose.Types.ObjectId[];
-    channels: mongoose.Types.ObjectId[];
+    channels: PopulatedDoc<Channel>[] | Schema.Types.ObjectId[] | [];
 }
 
 export const Guild = mongoose.model(
@@ -23,15 +21,9 @@ export const Guild = mongoose.model(
                 required: true,
                 unique: true,
             },
-            functionalities: [
-                {
-                    type: mongoose.Types.ObjectId,
-                    ref: Functionality
-                }
-            ],
             channels: [
                 {
-                    type: mongoose.Types.ObjectId,
+                    type: Schema.Types.ObjectId,
                     ref: Channel
                 }
             ]

@@ -1,16 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
-export interface Functionality {
+interface Functionality {
     function: string;
-    guildIds: mongoose.Types.ObjectId[],
-    channelIds: mongoose.Types.ObjectId[],
 }
 
-export const Functionality = mongoose.model(
-    "Functionality",
+const schema =
     new Schema<Functionality>(
         {
-
             function: {
                 type: String,
                 required: true,
@@ -21,4 +17,6 @@ export const Functionality = mongoose.model(
             timestamps: true,
         }
     )
-);
+
+const Functionality = mongoose.model('Functionality', schema);
+export default Functionality;

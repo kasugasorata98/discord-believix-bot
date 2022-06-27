@@ -1,9 +1,9 @@
 import axios from "axios";
-import { getConfig } from "../config";
+import { config } from "../config";
 
 const AxiosClient = () => {
   const axiosInstance = axios.create({
-    httpsAgent: getConfig.agentOptions,
+    httpsAgent: config.agentOptions,
   });
   axiosInstance.interceptors.request.use((request) => {
     return request;

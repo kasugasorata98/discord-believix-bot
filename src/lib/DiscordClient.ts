@@ -26,5 +26,28 @@ class DiscordClient {
     }
     return null;
   }
+
+  getChannelById(channelId: string): TextChannel {
+    return discordClient.channels.cache.get(channelId) as TextChannel;
+  }
+
+  async getChannelMessages(channelId: string): Promise<string[]> {
+    const channel = this.getClient().channels.cache.get(channelId) as TextChannel
+    let messages: string[] = [];
+    let message = await channel.messages
+      .fetch({ limit: 1 })
+      .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
+    while (message) {
+      await channel.messages
+        .fetch({ limit: 100, before: message.id })
+        .then(messagePage => {
+          messagePage.forEach(async msg => {
+            messages.push(msg.toString());
+          });
+          message = 0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
+        })
+    }
+    return messages;
+  }
 }
 export default DiscordClient;

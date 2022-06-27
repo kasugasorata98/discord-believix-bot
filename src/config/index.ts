@@ -14,7 +14,7 @@ export interface Config {
   agentOptions?: https.AgentOptions;
 }
 
-export const getConfig = (() => {
+export const config = (() => {
   switch (process.env.NODE_ENV || "development") {
     case "prod":
     case "production": {
