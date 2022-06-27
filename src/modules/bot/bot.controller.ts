@@ -37,10 +37,11 @@ class BotController extends DiscordClient {
     });
     console.log('Discord Bot is logging in...')
     this.getClient().login(process.env.DISCORD_TOKEN);
-    this.getClient().on('ready', async () => {
-      console.log('Discord Bot Logged in');
-      await this.getChannelMessages('971429249837846580');
-      await this.getChannelMessages('982065262360657940');
+    await new Promise<void>((resolve) => {
+      this.getClient().on('ready', async () => {
+        console.log('Discord Bot Logged in');
+        resolve();
+      })
     })
   }
 
