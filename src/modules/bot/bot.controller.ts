@@ -27,7 +27,7 @@ class BotController extends DiscordClient {
   async init(): Promise<void> {
     await this.initializeDiscordClient();
     await this.initializeGuilds();
-    this.initializeWarCall();
+    // this.initializeWarCall(); disabled for now
     this.initializeItemShopController();
   }
 
