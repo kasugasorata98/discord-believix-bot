@@ -33,7 +33,7 @@ jobs:
           echo PUPPETEER_RECAPTCHA_ID=${{secrets.PUPPETEER_RECAPTCHA_ID}} > .env
           echo PUPPETEER_RECAPTCHA_TOKEN=${{secrets.PUPPETEER_RECAPTCHA_TOKEN}} > .env
           echo "cat .env"
-          cat. env
+          cat .env
       - run: npm ci
       - run: npm run stop
       - run: npm run start
