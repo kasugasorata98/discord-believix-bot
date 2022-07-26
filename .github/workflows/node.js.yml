@@ -7,6 +7,15 @@ on:
   push:
     branches: ["main"]
 
+ env:
+    DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+    MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+    CLOUD_TRANSLATION_API: ${{ secrets.CLOUD_TRANSLATION_API }}
+    CLOUD_TRANSLATION_PROJECT: ${{ secrets.CLOUD_TRANSLATION_PROJECT }}
+    NODE_ENV: test
+    PUPPETEER_RECAPTCHA_ID: ${{ secrets.PUPPETEER_RECAPTCHA_ID }}
+    PUPPETEER_RECAPTCHA_TOKEN: ${{ secrets.PUPPETEER_RECAPTCHA_TOKEN }}
+
 jobs:
   build:
     runs-on: self-hosted
@@ -24,14 +33,7 @@ jobs:
           cache: "npm"
       - name: Generate .env file
         run: echo Generating env...
-        env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
-          CLOUD_TRANSLATION_API: ${{ secrets.CLOUD_TRANSLATION_API }}
-          CLOUD_TRANSLATION_PROJECT: ${{ secrets.CLOUD_TRANSLATION_PROJECT }}
-          NODE_ENV: test
-          PUPPETEER_RECAPTCHA_ID: ${{ secrets.PUPPETEER_RECAPTCHA_ID }}
-          PUPPETEER_RECAPTCHA_TOKEN: ${{ secrets.PUPPETEER_RECAPTCHA_TOKEN }}
+       
       # - name: Generate .env file
       #   run: |
       #     touch .env
