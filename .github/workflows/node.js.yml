@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+      - name: Generate .env file
+        run: echo Generating env...
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
