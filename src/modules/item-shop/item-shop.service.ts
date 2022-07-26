@@ -32,12 +32,6 @@ class ItemShopService extends DiscordClient {
         req.continue();
       }
     });
-    await page.evaluateOnNewDocument(() => {
-      // Pass webdriver check
-      Object.defineProperty(navigator, "webdriver", {
-        get: () => false,
-      });
-    });
 
     await page.goto(url, { waitUntil: "networkidle2", timeout: 0 });
     await page.waitForNavigation({
