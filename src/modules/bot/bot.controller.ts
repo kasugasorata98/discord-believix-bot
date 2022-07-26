@@ -5,7 +5,6 @@ import CommandController from "../command/command.controller";
 import WarCallController from "../war-call/war-call.controller";
 import DiscordClient from "../../lib/DiscordClient";
 import ItemShopController from "../item-shop/item-shop.controller";
-import ProxyController from "../../dump/proxy/proxy.controller";
 import TranslationController from "../translation/translation.controller";
 import { Guild } from "../../models/Guild";
 import { HydratedDocument } from "mongoose";
@@ -13,7 +12,6 @@ import { HydratedDocument } from "mongoose";
 class BotController extends DiscordClient {
   insultService: InsultService;
   complimentService: ComplimentService;
-  proxyController: ProxyController;
   translationController: TranslationController;
   guilds: HydratedDocument<Guild>[] = [];
   constructor() {
@@ -21,7 +19,6 @@ class BotController extends DiscordClient {
     this.insultService = new InsultService();
     this.complimentService = new ComplimentService();
     this.translationController = new TranslationController();
-    this.proxyController = new ProxyController();
   }
 
   async init(): Promise<void> {
