@@ -23,15 +23,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Generate .env file
-        uses: SpicyPizza/create-envfile@v1
-        with: |
-          envkey_DISCORD_TOKEN=${{secrets.DISCORD_TOKEN}}
-          envkey_MONGODB_CONNECTION_STRING=${{secrets.MONGODB_CONNECTION_STRING}}
-          envkey_CLOUD_TRANSLATION_API=${{secrets.CLOUD_TRANSLATION_API}}
-          envkey_CLOUD_TRANSLATION_PROJECT=${{secrets.CLOUD_TRANSLATION_PROJECT}}
-          envkey_NODE_ENV=${{secrets.NODE_ENV}}
-          envkey_PUPPETEER_RECAPTCHA_ID=${{secrets.PUPPETEER_RECAPTCHA_ID}}
-          envkey_PUPPETEER_RECAPTCHA_TOKEN=${{secrets.PUPPETEER_RECAPTCHA_TOKEN}}
+        run: |
+          touch .env
+          echo DISCORD_TOKEN=${{secrets.DISCORD_TOKEN}} > .env
+          echo MONGODB_CONNECTION_STRING=${{secrets.MONGODB_CONNECTION_STRING}} > .env
+          echo CLOUD_TRANSLATION_API=${{secrets.CLOUD_TRANSLATION_API}} > .env
+          echo CLOUD_TRANSLATION_PROJECT=${{secrets.CLOUD_TRANSLATION_PROJECT}} > .env
+          echo NODE_ENV=${{secrets.NODE_ENV}} > .env
+          echo PUPPETEER_RECAPTCHA_ID=${{secrets.PUPPETEER_RECAPTCHA_ID}} > .env
+          echo PUPPETEER_RECAPTCHA_TOKEN=${{secrets.PUPPETEER_RECAPTCHA_TOKEN}} > .env
+          cat .env
       - run: npm ci
       - run: npm run stop
       - run: npm run start
