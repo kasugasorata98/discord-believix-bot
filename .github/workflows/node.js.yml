@@ -25,12 +25,13 @@ jobs:
       - name: Generate .env file
         run: |
           touch .env
-          echo DISCORD_TOKEN=${{secrets.DISCORD_TOKEN}} > .env
+          echo DISCORD_TOKEN=${{secrets.DISCORD_TOKEN}}\n > .env
           echo MONGODB_CONNECTION_STRING=${{secrets.MONGODB_CONNECTION_STRING}} > .env
           echo CLOUD_TRANSLATION_API=${{secrets.CLOUD_TRANSLATION_API}} > .env
           echo CLOUD_TRANSLATION_PROJECT=${{secrets.CLOUD_TRANSLATION_PROJECT}} > .env
           echo NODE_ENV=${{secrets.NODE_ENV}} > .env
           echo PUPPETEER_RECAPTCHA_ID=${{secrets.PUPPETEER_RECAPTCHA_ID}} > .env
+          echo PUPPETEER_RECAPTCHA_TOKEN=${{secrets.PUPPETEER_RECAPTCHA_TOKEN}} > .env
           cat .env
       - run: npm ci
       - run: npm run stop
