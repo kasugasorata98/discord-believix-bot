@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Generate .env file
-      - uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@v1
         with: |
           envkey_DISCORD_TOKEN=${{secrets.DISCORD_TOKEN}}
           envkey_MONGODB_CONNECTION_STRING=${{secrets.MONGODB_CONNECTION_STRING}}
