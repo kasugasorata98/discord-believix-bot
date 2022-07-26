@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2 start --name=discord-believix-bot index.ts",
+    "stop": "pm2 delete discord-believix-bot 2> /dev/null || true",
     "dev": "nodemon --exec ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
