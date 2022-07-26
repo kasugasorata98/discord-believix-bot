@@ -1,5 +1,5 @@
-console.log(process.env.NODE_ENV)
-// import { config } from "./src/config";
+import { config } from "./src/config";
+console.log(config.environment)
 // import MongooseClient from "./src/lib/MongooseClient";
 // import BotController from "./src/modules/bot/bot.controller";
 
