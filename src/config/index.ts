@@ -8,9 +8,9 @@ dotenv.config();
 export interface Config {
   discordToken: string;
   mongoDBString: string;
-  cloudTranslationApi: string;
-  cloudTranslationProject: string;
   environment: string;
+  OPENAI_KEY: string;
+  OPENAI_ORG: string;
   agentOptions?: https.AgentOptions;
 }
 

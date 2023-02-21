@@ -6,7 +6,11 @@ class DiscordClient {
   setClient() {
     console.log("Initializing Discord Bot");
     discordClient = new DiscordJS.Client({
-      intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.MESSAGE_CONTENT,
+      ],
     });
   }
 
@@ -32,20 +36,25 @@ class DiscordClient {
   }
 
   async getChannelMessages(channelId: string): Promise<string[]> {
-    const channel = this.getClient().channels.cache.get(channelId) as TextChannel
+    const channel = this.getClient().channels.cache.get(
+      channelId
+    ) as TextChannel;
     let messages: string[] = [];
     let message = await channel.messages
       .fetch({ limit: 1 })
-      .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
+      .then((messagePage) =>
+        messagePage.size === 1 ? messagePage.at(0) : null
+      );
     while (message) {
       await channel.messages
         .fetch({ limit: 100, before: message.id })
-        .then(messagePage => {
-          messagePage.forEach(async msg => {
+        .then((messagePage) => {
+          messagePage.forEach(async (msg) => {
             messages.push(msg.toString());
           });
-          message = 0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
-        })
+          message =
+            0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
+        });
     }
     return messages;
   }

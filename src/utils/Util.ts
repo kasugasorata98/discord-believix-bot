@@ -1,5 +1,4 @@
-import { Collection, Message, Snowflake, TextChannel } from "discord.js";
-import Readline from 'readline';
+import Readline from "readline";
 
 export const Util = {
   escapeRegExp: (string: string): string => {
@@ -41,33 +40,16 @@ export const Util = {
     let seconds = Number(((millis % 60000) / 1000).toFixed(0));
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   },
-  clearChannelMessages: async (channel: TextChannel) => {
-    const deleteMessages = async (): Promise<
-      Collection<Snowflake, Message>
-    > => {
-      return await channel.bulkDelete(100);
-    };
-    if (channel) {
-      let deleted: Collection<Snowflake, Message>;
-      do {
-        try {
-          deleted = await deleteMessages();
-        } catch (err) {
-          deleted = await deleteMessages();
-        }
-      } while (deleted.size !== 0);
-    }
-  },
   askQuestion: (question: string): Promise<string> => {
     return new Promise((resolve) => {
       const readline = Readline.createInterface({
         input: process.stdin,
         output: process.stdout,
       });
-      readline.question(question, reply => {
+      readline.question(question, (reply) => {
         readline.close();
         resolve(reply);
-      })
-    })
+      });
+    });
   },
 };
